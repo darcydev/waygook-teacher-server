@@ -25,14 +25,14 @@ if ($isLoggedIn) {
   $userLoggedInRow = $user->getOtherUser($user->getID());
 
   // set bool for whether User is student or not
-  $isStudent = $userLoggedInRow['role'] == 'student' ? true : false;
+  /* $isStudent = $userLoggedInRow['role'] == 'student' ? true : false; */
 
   /* INCLUDE FILES */
-  require_once("src/controllers/sendMessage.php");
+  /*   require_once("src/controllers/sendMessage.php");
   require_once("src/controllers/scheduleLesson.php");
   require_once("src/views/modals/scheduleLesson.php");
   require_once("src/views/modals/sendMessage.php");
-  require_once("src/views/modals/confirmAction.php");
+  require_once("src/views/modals/confirmAction.php"); */
 } else {
   // if the User isn't logged in, redirect them to index.php
   // TODO: not working (infinite redirects)

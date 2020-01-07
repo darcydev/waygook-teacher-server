@@ -16,13 +16,15 @@ $rest_json = file_get_contents("php://input");
 $_POST = json_decode($rest_json, true);
 
 if ($_SERVER['REQUEST_METHOD'] === "POST") {
-  // verification is done on frontend
-  // TODO do I need to do it again?
-  // TODO update to email on frontend
-  $email = $_POST['username'];
+  // verification is done on frontend do I need to do it again?
+  $email = $_POST['email'];
   $password = $_POST['password'];
 
   $result = $account->loginAccount($email, $password);
+
+  if ($result == true) {
+    $_SESSION['userEmail'] = $email;
+  }
 
 
   if ($result == false) : ?>
@@ -38,17 +40,5 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
 "status": "success",
 "message": "Your data was successfully submitted"
 }
-<?php endif; ?>
-
-<?php
-
-  /*
-
-  if ($result == true) {
-    // set the session variable
-    $_SESSION['userEmail'] = $email;
-  } else {
-    echo "Sorry, there's been an error logging in";
-  }
-  */
+<?php endif;
 }
