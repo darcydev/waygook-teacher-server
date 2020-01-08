@@ -12,10 +12,9 @@ header("Content-Type: application/json");
 
 // GET DATA FORM REQUEST
 $rest_json = file_get_contents("php://input");
-// TODO what does this do?
 $_POST = json_decode($rest_json, true);
 
-if ($_SERVER['REQUEST_METHOD'] === "POST") {
+/* if ($_SERVER['REQUEST_METHOD'] === "POST") {
   // verification is done on frontend do I need to do it again?
   $email = $_POST['email'];
   $password = $_POST['password'];
@@ -41,4 +40,4 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
 "message": "Your data was successfully submitted"
 }
 <?php endif;
-}
+} */

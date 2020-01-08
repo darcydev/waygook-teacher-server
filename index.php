@@ -10,6 +10,7 @@ $account = new Account();
 
 require_once("controllers/login.php");
 require_once("controllers/users.php");
+require_once("controllers/profile.php");
 
 // set bool for whether User is logged in or not
 $isLoggedIn = isset($_SESSION['userEmail']) ? true : false;
