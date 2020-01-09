@@ -1,13 +1,4 @@
 <?php
-require_once("config/config.php");
-require_once("models/MyPDO.php");
-
-$db = MyPDO::instance();
-
-/* header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Headers: Content-Type");
-header("Content-Type: application/json"); */
-
 // GET DATA FORM REQUEST
 $_POST = json_decode(file_get_contents('php://input'), true);
 

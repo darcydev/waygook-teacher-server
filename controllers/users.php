@@ -1,16 +1,5 @@
 <?php
-require_once("config/config.php");
-require_once("models/MyPDO.php");
-
-$db = MyPDO::instance();
-
-header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Headers: Content-Type");
-header("Content-Type: application/json");
-
-// $_GET = json_decode($rest_json, true);
-
-/* $sql = "SELECT userID, first_name, profile_pic, nationality, gender, DOB, rate
+$sql = "SELECT userID, first_name, profile_pic, nationality, gender, DOB, rate
         FROM Users WHERE role='teacher'";
 $stmt = $db->run($sql);
 // $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -39,4 +28,4 @@ if ($stmt->rowCount() > 0) {
 } else {
   //IF THERE IS NO POST IN OUR DATABASE
   echo json_encode(['message' => 'No post found']);
-} */
+}
