@@ -220,8 +220,6 @@ class User
 
   public function insertMessage($message_text, $to_user_id)
   {
-    $this->validateMessage($message_text);
-
     if (empty($this->errorArray) == true) {
       $sql = "INSERT INTO Messages VALUES (messageID, ?, ?, ?, ?)";
       $stmt = $this->db->run($sql, [
@@ -232,13 +230,6 @@ class User
       ]);
       return $stmt->rowCount();
     }
-  }
-
-  private function validateMessage($messageText)
-  {
-    // TODO: insert code...
-    // fe, ensure that User has actually entered a message (perhaps validate with min. characters?)
-    return;
   }
 
   /* A generic function to update all User details in the DB

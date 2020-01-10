@@ -35,8 +35,16 @@ if ($uri === '/profile.php') {
   require_once("controllers/profile.php");
 }
 
+if ($uri === '/conversation.php') {
+  require_once("controllers/conversation.php");
+}
+
 if ($uri === '/sendMessage.php') {
   require_once("controllers/sendMessage.php");
+}
+
+if ($uri === '/inbox.php') {
+  require_once("controllers/inbox.php");
 }
 
 // set bool for whether User is logged in or not
@@ -44,9 +52,9 @@ $isLoggedIn = isset($_SESSION['userEmail']) ? true : false;
 
 if ($isLoggedIn) {
 
-  $user = new User($_SESSION['userEmail']);
-  $employment = new Employment($user->getID());
+  /* $user = new User($_SESSION['userEmail']);
+  $employment = new Employment($user->getID()); */
 
   /* FETCH USER FROM DB */
-  $userLoggedInRow = $user->getOtherUser($user->getID());
+  /* $userLoggedInRow = $user->getOtherUser($user->getID()); */
 }
