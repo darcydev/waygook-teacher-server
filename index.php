@@ -35,6 +35,10 @@ if ($uri === '/profile.php') {
   require_once("controllers/profile.php");
 }
 
+if ($uri === '/sendMessage.php') {
+  require_once("controllers/sendMessage.php");
+}
+
 // set bool for whether User is logged in or not
 $isLoggedIn = isset($_SESSION['userEmail']) ? true : false;
 

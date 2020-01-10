@@ -2,7 +2,6 @@
 $sql = "SELECT userID, first_name, profile_pic, nationality, gender, DOB, rate
         FROM Users WHERE role='teacher'";
 $stmt = $db->run($sql);
-// $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 if ($stmt->rowCount() > 0) {
   $users = [];

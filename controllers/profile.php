@@ -21,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
       "role" => $row['role'],
       "gender" => $row['gender'],
       "nationality" => $row['nationality'],
-      "education_level" => $row['education_level'],
+      "education_level" => ucfirst($row['education_level']),
       "education_major" => $row['education_major'],
       "DOB" => $row['DOB'],
       "rate" => $row['rate'],
