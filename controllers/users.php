@@ -7,8 +7,6 @@ if ($stmt->rowCount() > 0) {
   $users = [];
 
   while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-    // extract($row);
-
     $user_item = [
       "userID" => $row['userID'],
       "first_name" => $row['first_name'],

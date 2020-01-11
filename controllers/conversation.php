@@ -8,7 +8,15 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
 
   $user = new User($thisUserEmail);
 
-  $result = $user->getConversation($otherUserID);
+  $conversation = $user->getConversation($otherUserID);
+  $thisUser = $user->getOtherUser($user->getID());
+  $otherUser = $user->getOtherUser($otherUserID);
+
+  $result = array(
+    "conversation" => $conversation,
+    "thisUser" => $thisUser,
+    "otherUser"  => $otherUser
+  );
 
   echo json_encode($result);
 }

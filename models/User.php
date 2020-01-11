@@ -262,7 +262,8 @@ class User
             GROUP BY  least(`to_user_id` ,  `from_user_id`), greatest(`to_user_id` ,  `from_user_id`)
         ) b ON a.messageID = b.id";
     $stmt = $this->db->run($sql, [$this->userID, $this->userID]);
-    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    // return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    return $stmt;
   }
 
   // fetch conversation between two specific Users

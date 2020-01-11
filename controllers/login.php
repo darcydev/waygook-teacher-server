@@ -10,9 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
   $result = $account->loginAccount($email, $password);
 
   if ($result == true) {
-    $_SESSION['userEmail'] = $email;
-
-    $user = new User($_SESSION['userEmail']);
+    $user = new User($email);
     $userID = $user->getID();
   }
 

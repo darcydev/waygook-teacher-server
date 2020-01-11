@@ -1,5 +1,4 @@
 <?php
-// GET DATA FORM REQUEST
 $_POST = json_decode(file_get_contents('php://input'), true);
 
 if ($_SERVER['REQUEST_METHOD'] === "POST") {
@@ -8,26 +7,27 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
   $user = new User($userEmail);
   $userID = $user->getID();
 
-  $result = $user->getAllContacts();
+  $stmt = $user->getAllContacts();
+
+  $conversations = [];
+  $otherUsers = [];
+
+  while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+    if ($row['to_user_id'] === $userID) $otherUserID = $row['from_user_id'];
+    else $otherUserID = $row['to_user_id'];
+
+    /* TODO: limit the data extracted in the query */
+    $otherUser = $user->getOtherUser($otherUserID);
+    $conversationRow = $row;
+
+    array_push($otherUsers, $otherUser);
+    array_push($conversations, $conversationRow);
+  }
+
+  $result = array(
+    "conversations" => $conversations,
+    "otherUsers" => $otherUsers
+  );
 
   echo json_encode($result);
-
-  /*   if ($result->rowCount() > 0) {
-    $conversations = [];
-
-    while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
-      // extract($row);
-
-      $conversation_item = [
-        "messageID" => $row['messageID']
-      ];
-
-      array_push($conversations, $conversation_item);
-    }
-
-    echo json_encode($conversations);
-  } else {
-    //IF THERE IS NO POST IN OUR DATABASE
-    echo json_encode(['message' => 'No post found']);
-  } */
 }

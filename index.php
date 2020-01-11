@@ -4,14 +4,8 @@ header("Access-Control-Allow-Headers: Content-Type");
 header("Content-Type: application/json");
 
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-// $uri = explode('/', $uri);
 $requestMethod = $_SERVER["REQUEST_METHOD"];
 
-//echo $uri;
-// login.php
-// users.php
-// profile/{userID}.php
-//echo $requestMethod;
 
 require_once("config/config.php");
 require_once("models/Account.php");
@@ -49,12 +43,3 @@ if ($uri === '/inbox.php') {
 
 // set bool for whether User is logged in or not
 $isLoggedIn = isset($_SESSION['userEmail']) ? true : false;
-
-if ($isLoggedIn) {
-
-  /* $user = new User($_SESSION['userEmail']);
-  $employment = new Employment($user->getID()); */
-
-  /* FETCH USER FROM DB */
-  /* $userLoggedInRow = $user->getOtherUser($user->getID()); */
-}
