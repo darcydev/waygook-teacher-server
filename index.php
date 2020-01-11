@@ -6,7 +6,6 @@ header("Content-Type: application/json");
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $requestMethod = $_SERVER["REQUEST_METHOD"];
 
-
 require_once("config/config.php");
 require_once("models/Account.php");
 require_once("models/User.php");
@@ -19,6 +18,10 @@ $db = MyPDO::instance();
 
 if ($uri === '/login.php') {
   require_once("controllers/login.php");
+}
+
+if ($uri === '/register.php') {
+  require_once("controllers/register.php");
 }
 
 if ($uri === '/users.php') {
