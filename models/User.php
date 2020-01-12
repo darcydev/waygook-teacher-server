@@ -83,9 +83,12 @@ class User
     return $this->description;
   }
 
+  // extracts only the (relevant?) details -- may need to extract more!
   public function getOtherUser($id)
   {
-    $sql = "SELECT * FROM Users WHERE userID = ?";
+    $sql = "SELECT userID, first_name, last_name, email, profile_pic, nationality, timezone 
+          FROM Users 
+          WHERE userID = ?";
     $stmt = $this->db->run($sql, [$id]);
     return $stmt->fetch(PDO::FETCH_ASSOC);
   }
@@ -144,10 +147,14 @@ class User
     }
   }
 
-  public function updateProfilePic($db_uploadPath, $extension, $size, $uploadPath, $userID)
+  public function uploadProfilePic($uploadPath, $userID)
   {
-    $this->validateProfilePic($extension, $size, $uploadPath);
-    return $this->updateUserDetails('profile_pic', $db_uploadPath, $userID);
+    // check file name is unique
+    if (file_exists($uploadPath)) {
+      array_push($this->errorArray, Constants::$invalidFileName);
+    } else {
+      return $this->updateUserDetails('profile_pic', $uploadPath, $userID);
+    }
   }
 
   private function validateProfilePic($extension, $size, $uploadPath)
@@ -260,9 +267,7 @@ class User
             OR  `alt`.`from_user_id` = ?
             GROUP BY  least(`to_user_id` ,  `from_user_id`), greatest(`to_user_id` ,  `from_user_id`)
         ) b ON a.messageID = b.id";
-    $stmt = $this->db->run($sql, [$this->userID, $this->userID]);
-    // return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    return $stmt;
+    return $this->db->run($sql, [$this->userID, $this->userID]);
   }
 
   // fetch conversation between two specific Users

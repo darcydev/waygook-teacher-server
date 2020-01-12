@@ -20,19 +20,10 @@ class Account
 		return "<span class='errorMessage'>$error</span>";
 	}
 
-	public function loginAccount($em, $pw)
+	public function loginAccount($email, $password)
 	{
-		$sql = "SELECT email, password FROM Users
-				WHERE email = ? AND password = ?";
-		$query = $this->db->run($sql, [$em, $pw]);
-
-		// BUG: "rowCount()" is not for a SELECT query (https://stackoverflow.com/questions/40355262/pdo-rowcount-only-returning-one)
-		if ($query->rowCount() == 1) {
-			return true;
-		} else {
-			array_push($this->errorArray, Constants::$loginFailed);
-			return false;
-		}
+		$sql = "SELECT COUNT(*) FROM Users WHERE email = ? AND password = ?";
+		return $this->db->run($sql, [$email, $password]);
 	}
 
 	public function registerAccount($em, $fn, $ln, $role, $pw, $pw2)

@@ -1,6 +1,7 @@
 <?php
-$rest_json = file_get_contents("php://input");
-$_POST = json_decode($rest_json, true);
+require("../index.php");
+header("Content-Type: application/json");
+$_POST = json_decode(file_get_contents('php://input'), true);
 
 if ($_SERVER['REQUEST_METHOD'] === "POST") {
   $first = $_POST['first'];
@@ -10,19 +11,19 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
   $confirm = md5($_POST['confirm']);
   $role = $_POST['role'];
 
-  $result = $account->registerAccount($email, $first, $last, $role, $password, $confirm);
+  $rowCount = $account->registerAccount($email, $first, $last, $role, $password, $confirm);
 
-  if ($result === 1) {
+  if ($rowCount === 1) {
     $user = new User($email);
     $userID = $user->getID();
 
     $data = array(
-      "success" => $result,
+      "success" => true,
       "userID"  => $userID
     );
   } else {
     $data = array(
-      "success" => $result
+      "success" => false
     );
   }
 

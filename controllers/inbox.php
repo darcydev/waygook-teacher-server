@@ -1,7 +1,9 @@
 <?php
+require("../index.php");
+header("Content-Type: application/json");
 $_POST = json_decode(file_get_contents('php://input'), true);
 
-if ($_SERVER['REQUEST_METHOD'] === "POST") {
+if ($_SERVER['REQUEST_METHOD'] === "GET") {
   $userEmail = $_POST['userEmail'];
 
   $user = new User($userEmail);
@@ -16,7 +18,6 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
     if ($row['to_user_id'] === $userID) $otherUserID = $row['from_user_id'];
     else $otherUserID = $row['to_user_id'];
 
-    /* TODO: limit the data extracted in the query */
     $otherUser = $user->getOtherUser($otherUserID);
     $conversationRow = $row;
 

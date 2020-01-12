@@ -1,35 +1,22 @@
 <?php
-require("../NEWindex.php");
+require("../index.php");
 
-$rest_json = file_get_contents("php://input");
-$_POST = json_decode($rest_json, true);
+header("Content-Type: application/json");
+
+$_POST = json_decode(file_get_contents('php://input'), true);
 
 if ($_SERVER['REQUEST_METHOD'] === "POST") {
   $email = $_POST['email'];
   $password = md5($_POST['password']);
 
-  // $result = $account->loginAccount($email, $password);
-
-  $count = "SELECT COUNT(*) FROM Users WHERE email = ? AND password = ?";
-  $query = $db->run($count, [$email, $password]);
+  $query = $account->loginAccount($email, $password);
 
   if ($query->fetchColumn() === 1) {
-    $result = true;
-  } else {
-    $result = false;
-  }
-
-  /*   $sql = "SELECT email, password FROM users
-				WHERE email = ? AND password = ?";
-  $query = $db->run($sql, [$em, $pw]); */
-
-
-  if ($result === true) {
     $user = new User($email);
     $userID = $user->getID();
 
     $data = array(
-      "success" => $result,
+      "success" => true,
       "userID"  => $userID
     );
   } else {

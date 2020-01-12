@@ -1,6 +1,7 @@
 <?php
-$rest_json = file_get_contents("php://input");
-$_POST = json_decode($rest_json, true);
+require("../index.php");
+header("Content-Type: multipart/form-data");
+$_POST = json_decode(file_get_contents('php://input'), true);
 
 if ($_SERVER['REQUEST_METHOD'] === "POST") {
   $userEmail = 'kim_subin@gmail.com';
@@ -12,24 +13,30 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
   $extension = $_POST['type'];
   $size = $_POST['size'];
 
-  $DB_NAME = $name . $uid;
+  // TODO: do the verification on extension & size
 
-  $targetDir = "/public/images/profiles/";
-  $uploadPath = $_SERVER['DOCUMENT_ROOT'] . $targetDir . basename($DB_NAME);
-  $db_uploadPath = $targetDir . $DB_NAME;
+  $DB_NAME = $uid . $name;
+  $targetDir = 'C:\Users\Darcy\Projects\Waygook-Teacher\waygook-teacher-client\build\images\profiles';
+  $uploadPath = $targetDir . '\\' . $DB_NAME;
 
-  $rowsAffected = $user->updateProfilePic($db_uploadPath, $extension, $size, $uploadPath, $userID);
+  echo $uploadPath;
+
+  $rowsAffected = $user->uploadProfilePic($uploadPath, $userID);
 
   if ($rowsAffected === 1) {
     $successUpload = move_uploaded_file($DB_NAME, $uploadPath);
 
-    $data = array(
-      "success" => true
-    );
+    if ($successUpload) {
+      $success = true;
+    } else {
+      $success = false;
+      $message = 'Failed move_uploaded_file';
+    }
   } else {
-    $data = array(
-      "success" => false
-    );
+    $success = false;
+    $message = 'Failed insert into db';
   }
+
+  $data = ["success" => $success, "message" => $message];
   echo json_encode($data);
 }

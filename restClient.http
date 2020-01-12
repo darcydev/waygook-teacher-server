@@ -1,4 +1,5 @@
-@baseUrl = http://waygookteacher.com/api/
+// @baseUrl = http://waygookteacher.com/api/
+@baseUrl = http://127.0.0.1:8080/
 
 ### Login a registered User
 POST {{baseUrl}}controllers/login.php HTTP/1.1
@@ -15,37 +16,59 @@ content-type: application/json
 {
   "first": "Tom",
   "last": "Brady",
-  "email": "tombrady3@gmail.com",
+  "email": "tombrady@gmail.com",
   "password": "PassWord!",
   "confirm": "PassWord!",
   "role": "teacher"
 }
 
 ### Fetch all teachers
-GET {{baseUrl}}users.php HTTP/1.1
+GET {{baseUrl}}controllers/users.php HTTP/1.1
 content-type: application/json
 
-###
-
-# Update user settings/profile
-POST {{baseUrl}}settings.php HTTP/1.1
+### Update user settings/profile
+POST {{baseUrl}}controllers/settings.php HTTP/1.1
 content-type: application/json
 
 {
   "userID": 20,
+  "nationality": "Korean",
+  "DOB": "1990-02-05",
   "timezone": "Sydney/Australia"
 }
 
-###
-
-# Upload profile image
-POST {{baseUrl}}uploadImage.php HTTP/1.1
-content-type: application/json
+### Upload profile image
+POST {{baseUrl}}controllers/uploadImage.php HTTP/1.1
 
 {
   "userID": 20,
   "uid": "123456789",
   "name": "fake_image.jpg",
   "extension": "image/jpeg",
+  "type": "jpeg",
   "size": 25000
+}
+
+### Send a message
+POST {{baseUrl}}controllers/sendMessage.php HTTP/1.1
+
+{
+  "text": "This is a RESTClient test!",
+  "fromUserEmail": "john_clapton@gmail.com",
+  "toUserID": 20
+}
+
+### Get all contacts (users with message history)
+GET {{baseUrl}}controllers/inbox.php
+
+{
+  "userEmail": "kim_subin@gmail.com"
+}
+
+### Get a specific conversation
+GET {{baseUrl}}controllers/conversation.php
+
+{
+  "thisUserEmail": "john_clapton@gmail.com",
+  "otherUserID": 20
 }

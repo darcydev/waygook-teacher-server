@@ -12,10 +12,9 @@ class MyPDO
             PDO::ATTR_EMULATE_PREPARES   => FALSE,
         );
         $DB_HOST = 'localhost';
-        $DB_NAME = 'darcydev_waygookteacher';
-        $DB_USER = 'darcydev_admin';
-        /* TODO: hide this! */
-        $DB_PASS = '19Puey_m^tE8';
+        $DB_NAME = 'waygook-teacher';
+        $DB_USER = 'root';
+        $DB_PASS = '';
         $DB_CHAR = 'utf8mb4';
 
         $dsn = 'mysql:host=' . $DB_HOST . ';dbname=' . $DB_NAME . ';charset=' . $DB_CHAR;
