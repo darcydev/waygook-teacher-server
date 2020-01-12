@@ -23,7 +23,7 @@ $account = new Account();
 $db = MyPDO::instance();
 
 /* TODO: use PHP case/switch instead of many if statements */
-if ($uri === '/login.php') {
+if ($uri === '/controllers/login.php') {
   require_once("controllers/login.php");
 }
 
@@ -58,6 +58,3 @@ if ($uri === '/settings.php') {
 if ($uri === '/uploadImage.php') {
   require_once("controllers/uploadImage.php");
 }
-
-// set bool for whether User is logged in or not
-$isLoggedIn = isset($_SESSION['userEmail']) ? true : false;

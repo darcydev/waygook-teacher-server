@@ -1,18 +1,15 @@
-# REST Client tests on https://github.com/darcydev/waygook-teacher-server
-@baseUrl = http://127.0.0.1:8080/
+@baseUrl = http://waygookteacher.com/api/
 
-# login 
-POST {{baseUrl}}login.php HTTP/1.1
+### Login a registered User
+POST {{baseUrl}}controllers/login.php HTTP/1.1
 
 {
   "email": "kim_subin@gmail.com",
   "password": "password"
 }
 
-###
-
-# register
-POST {{baseUrl}}register.php HTTP/1.1
+### Register a new user
+POST {{baseUrl}}controllers/register.php HTTP/1.1
 content-type: application/json
 
 {
@@ -24,9 +21,7 @@ content-type: application/json
   "role": "teacher"
 }
 
-###
-
-# Fetch all teachers
+### Fetch all teachers
 GET {{baseUrl}}users.php HTTP/1.1
 content-type: application/json
 
