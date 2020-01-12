@@ -1,4 +1,5 @@
 <?php
+/* TODO change this for security reasons */
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: Content-Type");
 
@@ -21,6 +22,7 @@ require_once("models/Constants.php");
 $account = new Account();
 $db = MyPDO::instance();
 
+/* TODO: use PHP case/switch instead of many if statements */
 if ($uri === '/login.php') {
   require_once("controllers/login.php");
 }
