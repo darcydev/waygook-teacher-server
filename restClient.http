@@ -1,21 +1,56 @@
 # REST Client tests on https://github.com/darcydev/waygook-teacher-server
-@baseUrl = http://localhost:3002
+@baseUrl = http://127.0.0.1:8080/
 
 # login 
+POST {{baseUrl}}login.php HTTP/1.1
+
+{
+  "email": "kim_subin@gmail.com",
+  "password": "password"
+}
+
+###
 
 # register
-POST http://127.0.0.1:8080/register.php HTTP/1.1
+POST {{baseUrl}}register.php HTTP/1.1
 content-type: application/json
 
 {
   "first": "Tom",
   "last": "Brady",
-  "email": "tombrady2@gmail.com",
+  "email": "tombrady3@gmail.com",
   "password": "PassWord!",
   "confirm": "PassWord!",
   "role": "teacher"
 }
 
+###
+
 # Fetch all teachers
-GET http://127.0.0.1:8080/users.php HTTP/1.1
+GET {{baseUrl}}users.php HTTP/1.1
 content-type: application/json
+
+###
+
+# Update user settings/profile
+POST {{baseUrl}}settings.php HTTP/1.1
+content-type: application/json
+
+{
+  "userID": 20,
+  "timezone": "Sydney/Australia"
+}
+
+###
+
+# Upload profile image
+POST {{baseUrl}}uploadImage.php HTTP/1.1
+content-type: application/json
+
+{
+  "userID": 20,
+  "uid": "123456789",
+  "name": "fake_image.jpg",
+  "extension": "image/jpeg",
+  "size": 25000
+}

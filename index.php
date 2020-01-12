@@ -1,10 +1,15 @@
 <?php
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: Content-Type");
-header("Content-Type: application/json");
 
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $requestMethod = $_SERVER["REQUEST_METHOD"];
+
+if ($uri === '/uploadImage.php') {
+  header("Content-Type: multipart/form-data");
+} else {
+  header("Content-Type: application/json");
+}
 
 require_once("config/config.php");
 require_once("models/Account.php");
@@ -42,6 +47,14 @@ if ($uri === '/sendMessage.php') {
 
 if ($uri === '/inbox.php') {
   require_once("controllers/inbox.php");
+}
+
+if ($uri === '/settings.php') {
+  require_once("controllers/settings.php");
+}
+
+if ($uri === '/uploadImage.php') {
+  require_once("controllers/uploadImage.php");
 }
 
 // set bool for whether User is logged in or not

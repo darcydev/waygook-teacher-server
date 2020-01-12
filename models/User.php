@@ -144,21 +144,21 @@ class User
     }
   }
 
-  public function updateProfilePic($db_uploadPath, $fileExtension, $fileSize, $uploadPath)
+  public function updateProfilePic($db_uploadPath, $extension, $size, $uploadPath, $userID)
   {
-    $this->validateProfilePic($fileExtension, $fileSize, $uploadPath);
-    return $this->updateUserDetails('profile_pic', $db_uploadPath);
+    $this->validateProfilePic($extension, $size, $uploadPath);
+    return $this->updateUserDetails('profile_pic', $db_uploadPath, $userID);
   }
 
-  private function validateProfilePic($fileExtension, $fileSize, $uploadPath)
+  private function validateProfilePic($extension, $size, $uploadPath)
   {
     // check file extension
-    if (!in_array($fileExtension, ['jpeg', 'jpg', 'png'])) {
+    if (!in_array($extension, ['jpeg', 'jpg', 'png'])) {
       array_push($this->errorArray, Constants::$invalidFileExtension);
       return;
     }
     // check file size
-    if ($fileSize > 2000000) {
+    if ($size > 2000000) {
       array_push($this->errorArray, Constants::$invalidFileSize);
       return;
     }
@@ -237,14 +237,13 @@ class User
     ** the name of the column to be updated,
     ** the value of that column
    */
-  public function updateUserDetails($columnName, $columnValue)
+  public function updateUserDetails($columnName, $columnValue, $userID)
   {
-    // TODO: what is a 'DRY' way of validating each columnName?
-
+    // TODO: how to validate each different column
     if (empty($this->errorArray) == true) {
       $sql = "UPDATE Users SET $columnName = ? WHERE userID = ?";
-      $stmt = $this->db->run($sql, [$columnValue, $this->userID]);
-      return $stmt->rowCount(); // returns number of rows affected
+      $stmt = $this->db->run($sql, [$columnValue, $userID]);
+      return $stmt->rowCount();
     }
   }
 
