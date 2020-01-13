@@ -14,7 +14,7 @@ class User
   private $profile_pic;
   private $description;
 
-  /* REFACTOR THIS SO IT DOESN'T REQURE $userEmail? */
+  /* REFACTOR THIS SO IT DOESN'T REQUIRE $userEmail? */
   public function __construct($userEmail)
   {
     $this->db = MyPDO::instance();
@@ -81,6 +81,15 @@ class User
   public function getDescription()
   {
     return $this->description;
+  }
+
+  // fetch all teachers
+  public function getTeachers()
+  {
+    $sql = "SELECT userID, first_name, profile_pic, nationality, gender, DOB, rate
+        FROM Users WHERE role='teacher'";
+    $stmt = $this->db->run($sql);
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
   }
 
   // extracts only the (relevant?) details -- may need to extract more!

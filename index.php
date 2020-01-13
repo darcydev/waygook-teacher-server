@@ -1,6 +1,5 @@
 <?php
-/* TODO change this for security reasons */
-header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Origin: *"); // TODO insecure
 header("Access-Control-Allow-Headers: Content-Type");
 
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
@@ -13,5 +12,8 @@ require_once("models/Employment.php");
 require_once("models/MyPDO.php");
 require_once("models/Constants.php");
 
+require_once("models/newUsers.php");
+
 $account = new Account();
+$user = new newUsers();
 $db = MyPDO::instance();

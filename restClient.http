@@ -16,7 +16,7 @@ content-type: application/json
 {
   "first": "Tom",
   "last": "Brady",
-  "email": "tombrady@gmail.com",
+  "email": "tombrady99@gmail.com",
   "password": "PassWord!",
   "confirm": "PassWord!",
   "role": "teacher"
@@ -24,7 +24,6 @@ content-type: application/json
 
 ### Fetch all teachers
 GET {{baseUrl}}controllers/users.php HTTP/1.1
-content-type: application/json
 
 ### Update user settings/profile
 POST {{baseUrl}}controllers/settings.php HTTP/1.1

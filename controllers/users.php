@@ -1,13 +1,18 @@
 <?php
-require("../index.php");
-
+header("Access-Control-Allow-Origin: *"); // TODO insecure
+header("Access-Control-Allow-Headers: Content-Type");
 header("Content-Type: application/json");
+require("../index.php");
+// $_POST = json_decode(file_get_contents('php://input'), true);
 
-$_POST = json_decode(file_get_contents('php://input'), true);
+require('../models/newUsers.php');
 
-$sql = "SELECT userID, first_name, profile_pic, nationality, gender, DOB, rate
+/* $sql = "SELECT userID, first_name, profile_pic, nationality, gender, DOB, rate
         FROM Users WHERE role='teacher'";
-$stmt = $db->run($sql);
+$stmt = $db->run($sql); */
+
+$user = new newUsers();
+$stmt = $user->getTeachers();
 
 $users = [];
 
