@@ -84,13 +84,13 @@ class User
   }
 
   // fetch all teachers
-  public function getTeachers()
+  /*   public function getTeachers()
   {
     $sql = "SELECT userID, first_name, profile_pic, nationality, gender, DOB, rate
         FROM Users WHERE role='teacher'";
     $stmt = $this->db->run($sql);
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
-  }
+  } */
 
   // extracts only the (relevant?) details -- may need to extract more!
   /*   public function getOtherUser($id)

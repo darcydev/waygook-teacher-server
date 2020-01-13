@@ -2,39 +2,42 @@
 class Account
 {
 
-	protected $db;
-	protected $data;
-	private $errorArray;
+  protected $db;
+  protected $data;
 
-	public function __construct()
-	{
-		$this->db = MyPDO::instance();
-		$this->errorArray = array();
-	}
+  private $errorArray;
 
-	public function getError($error)
-	{
-		if (!in_array($error, $this->errorArray)) {
-			$error = "";
-		}
-		return "<span class='errorMessage'>$error</span>";
-	}
+  public function __construct()
+  {
+    $this->db = MyPDO::instance();
+    $this->errorArray = array();
+  }
 
-	public function loginAccount($email, $password)
-	{
-		$sql = "SELECT COUNT(*) FROM Users WHERE email = ? AND password = ?";
-		return $this->db->run($sql, [$email, $password]);
-	}
+  public function getError($error)
+  {
+    if (!in_array($error, $this->errorArray)) {
+      $error = "";
+    }
+    return "<span class='errorMessage'>$error</span>";
+  }
 
-	public function registerAccount($em, $fn, $ln, $role, $pw, $pw2)
-	{
-		$this->validateFirstName($fn);
-		$this->validateLastName($ln);
-		$this->validateEmail($em);
-		$this->validatePasswords($pw, $pw2);
+  /* FETCHING */
 
-		if (empty($this->errorArray)) {
-			$sql = "INSERT INTO Users
+  public function login($email, $password)
+  {
+    $sql = "SELECT COUNT(*) FROM Users WHERE email = ? AND password = ?";
+    return $this->db->run($sql, [$email, $password]);
+  }
+
+  /* INSERTING */
+
+  public function register($em, $fn, $ln, $role, $pw, $pw2)
+  {
+    $this->validateEmail($em);
+    $this->validatePasswords($pw, $pw2);
+
+    if (empty($this->errorArray)) {
+      $sql = "INSERT INTO Users
 					VALUES (
 						userID,
 						:first_name,
@@ -48,68 +51,97 @@ class Account
 						NULL, NULL, NULL, NULL,
 						NULL, NULL, NULL, NULL
 					)";
-			$stmt = $this->db->run($sql, [
-				':first_name' => $fn,
-				':last_name' => $ln,
-				':email' => $em,
-				':password' => $pw,
-				':role' => $role
-			]);
-			$rowsAffected = $stmt->rowCount();
-		} else {
-			$rowsAffected = 0;
-		}
-		return $rowsAffected;
-	}
+      $stmt = $this->db->run($sql, [
+        ':first_name' => $fn,
+        ':last_name' => $ln,
+        ':email' => $em,
+        ':password' => $pw,
+        ':role' => $role
+      ]);
+      $rowsAffected = $stmt->rowCount();
+    } else {
+      $rowsAffected = 0;
+    }
+    return $rowsAffected;
+  }
 
-	private function validateFirstName($fn)
-	{
-		if (strlen($fn) > 25 || strlen($fn) < 2) {
-			array_push($this->errorArray, Constants::$firstNameCharacters);
-			return;
-		}
-	}
+  /* UPDATING */
 
-	private function validateLastName($ln)
-	{
-		if (strlen($ln) > 25 || strlen($ln) < 2) {
-			array_push($this->errorArray, Constants::$lastNameCharacters);
-			return;
-		}
-	}
+  // generic function to update any User column
+  public function updateUserDetails($userID, $columnName, $columnValue)
+  {
+    if (empty($this->errorArray) == true) {
+      $sql = "UPDATE Users SET $columnName = ? WHERE userID = ?";
+      $stmt = $this->db->run($sql, [$columnValue, $userID]);
+      return ($stmt->rowCount() === 1) ? true : false;
+    }
+  }
 
-	private function validateEmail($em)
-	{
-		if (!filter_var($em, FILTER_VALIDATE_EMAIL)) {
-			array_push($this->errorArray, Constants::$emailInvalid);
-			return;
-		}
-		// check email unique
-		$sql = "SELECT email FROM Users WHERE email = ?";
-		$stmt = $this->db->run($sql, [$em]);
-		$rowsAffected = $stmt->rowCount();
-		if ($rowsAffected != 0) {
-			array_push($this->errorArray, Constants::$emailTaken);
-			return;
-		}
-	}
+  public function updatePassword($userID, $oldPassword, $newPassword, $confirmPassword)
+  {
+    $this->validateOldPassword($userID, $oldPassword);
+    $this->validateConfirmPassword($newPassword, $confirmPassword);
 
-	private function validatePasswords($pw, $pw2)
-	{
-		// check passwords match
-		if ($pw != $pw2) {
-			array_push($this->errorArray, Constants::$passwordsDoNoMatch);
-			return;
-		}
-		// check password alphanumberic
-		if (preg_match('/[^A-Za-z0-9]/', $pw)) {
-			array_push($this->errorArray, Constants::$passwordNotAlphanumeric);
-			return;
-		}
-		// check password length
-		if (strlen($pw) > 50 || strlen($pw) < 5) {
-			array_push($this->errorArray, Constants::$passwordCharacters);
-			return;
-		}
-	}
+    if (empty($this->errorArray)) {
+      $this->updateUserDetails($userID, 'password', $newPassword);
+    }
+  }
+
+  public function updateImage($userID, $uploadPath)
+  {
+    $this->validateImageNameUnique($uploadPath);
+
+    if (empty($this->errorArray)) {
+      return $this->updateUserDetails($userID, 'profile_pic', $uploadPath);
+    }
+  }
+
+  /* DELETING */
+
+  /* VALIDATION */
+
+  private function validateEmail($em)
+  {
+    if (!filter_var($em, FILTER_VALIDATE_EMAIL)) {
+      array_push($this->errorArray, Constants::$emailInvalid);
+      return;
+    }
+    // check email unique
+    $sql = "SELECT email FROM Users WHERE email = ?";
+    $stmt = $this->db->run($sql, [$em]);
+    $rowsAffected = $stmt->rowCount();
+    if ($rowsAffected != 0) {
+      array_push($this->errorArray, Constants::$emailTaken);
+      return;
+    }
+  }
+
+  // validate the old password is correct
+  private function validateOldPassword($userID, $password)
+  {
+    $sql = "SELECT COUNT(*) FROM Users WHERE userID = ? AND password = ?";
+    $query = $this->db->run($sql, [$userID, $password]);
+
+    if ($query->rowCount() !== 1) {
+      array_push($this->errorArray, Constants::$passwordIncorrect);
+    }
+
+    return;
+  }
+
+  private function validateConfirmPassword($password1, $password2)
+  {
+    if ($password1 != $password2) {
+      array_push($this->errorArray, Constants::$passwordsDoNoMatch);
+      return;
+    }
+  }
+
+  private function validateImageNameUnique($uploadPath)
+  {
+    if (file_exists($uploadPath)) {
+      array_push($this->errorArray, Constants::$invalidFileName);
+    }
+    return;
+  }
 }
