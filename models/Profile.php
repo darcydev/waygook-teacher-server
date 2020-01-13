@@ -23,6 +23,13 @@ class Profile
 
   /* FETCHING */
 
+  public function getUserID($email)
+  {
+    $sql = "SELECT userID FROM Users WHERE email = ?";
+    $stmt = $this->db->run($sql, [$email]);
+    return $stmt->fetch(PDO::FETCH_ASSOC);
+  }
+
   public function getProfile($userID)
   {
     $sql = "SELECT * FROM Users WHERE userID = ?";

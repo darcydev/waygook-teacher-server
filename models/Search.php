@@ -1,5 +1,6 @@
 <?php
-class Account
+
+class Search
 {
 
   protected $db;

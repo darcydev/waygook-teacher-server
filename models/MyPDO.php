@@ -1,4 +1,5 @@
 <?php
+
 class MyPDO
 {
     protected static $instance;

@@ -1,6 +1,7 @@
 <?php
-require("../index.php");
 header("Content-Type: application/json");
+
+require("../index.php");
 $_POST = json_decode(file_get_contents('php://input'), true);
 
 if ($_SERVER['REQUEST_METHOD'] === "GET") {

@@ -1,4 +1,5 @@
 <?php
+
 class Account
 {
 
@@ -26,7 +27,8 @@ class Account
   public function login($email, $password)
   {
     $sql = "SELECT COUNT(*) FROM Users WHERE email = ? AND password = ?";
-    return $this->db->run($sql, [$email, $password]);
+    $stmt = $this->db->run($sql, [$email, $password]);
+    return ($stmt->rowCount() === 1) ? true : false;
   }
 
   /* INSERTING */
@@ -58,11 +60,11 @@ class Account
         ':password' => $pw,
         ':role' => $role
       ]);
-      $rowsAffected = $stmt->rowCount();
+
+      return ($stmt->rowCount() === 1) ? true : false;
     } else {
-      $rowsAffected = 0;
+      return false;
     }
-    return $rowsAffected;
   }
 
   /* UPDATING */

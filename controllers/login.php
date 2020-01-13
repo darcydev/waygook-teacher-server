@@ -1,17 +1,17 @@
 <?php
-require("../index.php");
 header("Content-Type: application/json");
+
+require("../index.php");
 $_POST = json_decode(file_get_contents('php://input'), true);
 
 if ($_SERVER['REQUEST_METHOD'] === "POST") {
   $email = $_POST['email'];
   $password = md5($_POST['password']);
 
-  $query = $account->loginAccount($email, $password);
+  $query = $account->login($email, $password);
 
-  if ($query->fetchColumn() === 1) {
-    $user = new User($email);
-    $userID = $user->getID();
+  if ($query === true) {
+    $userID = $profile->getUserID($email);
 
     $data = array(
       "success" => true,
