@@ -14,7 +14,6 @@ if ($_SERVER['REQUEST_METHOD'] === "GET") {
       "first_name" => $row['first_name'],
       "profile_pic" => $row['profile_pic'],
       "nationality" => $row['nationality'],
-      "gender" => $row['gender'],
       "DOB" => $row['DOB'],
       "rate" => $row['rate']
     ];

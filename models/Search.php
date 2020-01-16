@@ -26,20 +26,20 @@ class Search
 
   public function getTeachers()
   {
-    $sql = "SELECT userID, first_name, profile_pic, nationality, gender, DOB, rate FROM Users WHERE role='teacher'";
+    $sql = "SELECT userID, first_name, profile_pic, nationality, DOB, rate FROM Users WHERE role='teacher'";
     return $this->db->run($sql);
   }
 
   public function getStudents()
   {
-    $sql = "SELECT userID, first_name, profile_pic, nationality, gender, DOB, rate FROM Users WHERE role='student'";
+    $sql = "SELECT userID, first_name, profile_pic, nationality, DOB, rate FROM Users WHERE role='student'";
     $stmt = $this->db->run($sql);
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
   }
 
   public function getKoreans()
   {
-    $sql = "SELECT userID, first_name, profile_pic, nationality, gender, DOB, rate FROM Users WHERE nationality='Korean'";
+    $sql = "SELECT userID, first_name, profile_pic, nationality, DOB, rate FROM Users WHERE nationality='Korean'";
     $stmt = $this->db->run($sql);
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
   }

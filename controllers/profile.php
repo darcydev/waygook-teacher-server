@@ -1,6 +1,4 @@
 <?php
-header("Access-Control-Allow-Origin: *"); // TODO insecure
-header("Access-Control-Allow-Headers: Content-Type");
 header("Content-Type: application/json");
 
 require("../index.php");
@@ -9,7 +7,7 @@ $_POST = json_decode(file_get_contents('php://input'), true);
 if ($_SERVER['REQUEST_METHOD'] === "POST") {
   $userID = $_POST['userID'];
 
-  $result = $profile->getProfile($userID);
+  $row = $profile->getProfile($userID);
 
   $user = [
     "userID" => $row['userID'],

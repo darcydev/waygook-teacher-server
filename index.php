@@ -1,5 +1,5 @@
 <?php
-header("Access-Control-Allow-Origin: *"); // TODO insecure
+header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: Content-Type");
 
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
@@ -20,5 +20,3 @@ $account = new Account();
 $employment = new Employment();
 $profile = new Profile();
 $search = new Search();
-
-require('controllers/register.php');

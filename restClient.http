@@ -1,5 +1,5 @@
-// @baseUrl = http://waygookteacher.com/api/
-@baseUrl = http://127.0.0.1:8080/
+@baseUrl = http://waygookteacher.com/api/
+// @baseUrl = http://127.0.0.1:8080/
 
 ### Login a registered User
 POST {{baseUrl}}controllers/login.php HTTP/1.1
@@ -16,10 +16,17 @@ content-type: application/json
 {
   "first": "Tom",
   "last": "Brady",
-  "email": "tombrady993339@gmail.com",
+  "email": "tombrady9913339@gmail.com",
   "password": "PassWord!",
   "confirm": "PassWord!",
   "role": "teacher"
+}
+
+### Fetch a Profile
+POST {{baseUrl}}controllers/profile.php HTTP/1.1
+
+{
+  "userID": 20
 }
 
 ### Fetch all teachers
@@ -32,8 +39,8 @@ content-type: application/json
 {
   "userID": 20,
   "nationality": "English",
-  "DOB": "1991-02-05",
-  "timezone": "Brisbane/Australia"
+  "DOB": "1992-02-05",
+  "timezone": "Perth/Korea"
 }
 
 ### Upload profile image
