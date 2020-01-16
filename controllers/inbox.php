@@ -5,12 +5,9 @@ require("../index.php");
 $_POST = json_decode(file_get_contents('php://input'), true);
 
 if ($_SERVER['REQUEST_METHOD'] === "GET") {
-  $userEmail = $_POST['userEmail'];
+  $userID = $_POST['userID'];
 
-  $user = new User($userEmail);
-  $userID = $user->getID();
-
-  $stmt = $user->getAllContacts();
+  $stmt = $profile->getContacts($userID);
 
   $conversations = [];
   $otherUsers = [];
@@ -19,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] === "GET") {
     if ($row['to_user_id'] === $userID) $otherUserID = $row['from_user_id'];
     else $otherUserID = $row['to_user_id'];
 
-    $otherUser = $user->getOtherUser($otherUserID);
+    $otherUser = $profile->getProfile($otherUserID);
     $conversationRow = $row;
 
     array_push($otherUsers, $otherUser);

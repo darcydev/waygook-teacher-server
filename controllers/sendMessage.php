@@ -9,23 +9,19 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
   // send this from cookies
   $fromUserID = $_POST['fromUserID'];
   $toUserID = $_POST['toUserID'];
-  /* $fromUserEmail = $_POST['fromUserEmail']; */
-  /*   $user = new User($fromUserEmail);
-  $userID = $user->getID(); */
 
   $result = $employment->createMessage($text, $fromUserID, $toUserID);
 
   if ($result === true) {
-    $success = true;
+    $data = [
+      "success" => true
+    ];
   } else {
-    $success = false;
-    $message = "Failed to create the message in the database";
+    $data = [
+      "success" => false,
+      "message" => "Failed to create the message in the database"
+    ];
   }
-
-  $data = array(
-    "success" => $success,
-    "message" => $message
-  );
 
   echo json_encode($data);
 }

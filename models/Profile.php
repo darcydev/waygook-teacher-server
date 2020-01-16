@@ -58,6 +58,20 @@ class Profile
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
   }
 
+  public function getContacts($userID)
+  {
+    $sql = "SELECT * FROM  `Messages` a
+        INNER JOIN (
+            SELECT MAX(  `messageID` ) AS id
+            FROM  `Messages` AS  `alt`
+            WHERE  `alt`.`to_user_id` = ?
+            OR  `alt`.`from_user_id` = ?
+            GROUP BY  least(`to_user_id` ,  `from_user_id`), greatest(`to_user_id` ,  `from_user_id`)
+        ) b ON a.messageID = b.id";
+    return $this->db->run($sql, [$userID, $userID]);
+    // return $stmt->fetchAll(PDO::FETCH_ASSOC);
+  }
+
   public function getLessons($userID)
   {
     $sql = "SELECT * FROM Lessons WHERE teacher_id = ? OR student_id = ? ORDER BY datetime DESC";

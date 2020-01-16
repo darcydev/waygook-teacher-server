@@ -1,4 +1,6 @@
 <?php
+header("Access-Control-Allow-Origin: *"); // TODO insecure
+header("Access-Control-Allow-Headers: Content-Type");
 header("Content-Type: application/json");
 
 require("../index.php");

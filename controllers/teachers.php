@@ -4,7 +4,7 @@ header("Content-Type: application/json");
 require("../index.php");
 
 if ($_SERVER['REQUEST_METHOD'] === "GET") {
-  $result = $search->getTeachers();
+  $stmt = $search->getTeachers();
 
   $teachers = [];
 

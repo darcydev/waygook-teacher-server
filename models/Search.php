@@ -27,8 +27,7 @@ class Search
   public function getTeachers()
   {
     $sql = "SELECT userID, first_name, profile_pic, nationality, gender, DOB, rate FROM Users WHERE role='teacher'";
-    $stmt = $this->db->run($sql);
-    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    return $this->db->run($sql);
   }
 
   public function getStudents()

@@ -20,3 +20,5 @@ $account = new Account();
 $employment = new Employment();
 $profile = new Profile();
 $search = new Search();
+
+require('controllers/register.php');

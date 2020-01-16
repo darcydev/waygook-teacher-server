@@ -36,7 +36,7 @@ class Account
   public function register($em, $fn, $ln, $role, $pw, $pw2)
   {
     $this->validateEmail($em);
-    $this->validatePasswords($pw, $pw2);
+    $this->validateConfirmPassword($pw, $pw2);
 
     if (empty($this->errorArray)) {
       $sql = "INSERT INTO Users

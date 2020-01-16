@@ -16,14 +16,14 @@ content-type: application/json
 {
   "first": "Tom",
   "last": "Brady",
-  "email": "tombrady99@gmail.com",
+  "email": "tombrady993339@gmail.com",
   "password": "PassWord!",
   "confirm": "PassWord!",
   "role": "teacher"
 }
 
 ### Fetch all teachers
-GET {{baseUrl}}controllers/users.php HTTP/1.1
+GET {{baseUrl}}controllers/teachers.php HTTP/1.1
 
 ### Update user settings/profile
 POST {{baseUrl}}controllers/settings.php HTTP/1.1
@@ -31,9 +31,9 @@ content-type: application/json
 
 {
   "userID": 20,
-  "nationality": "Korean",
-  "DOB": "1990-02-05",
-  "timezone": "Sydney/Australia"
+  "nationality": "English",
+  "DOB": "1991-02-05",
+  "timezone": "Brisbane/Australia"
 }
 
 ### Upload profile image
@@ -53,7 +53,7 @@ POST {{baseUrl}}controllers/sendMessage.php HTTP/1.1
 
 {
   "text": "This is a RESTClient test!",
-  "fromUserEmail": "john_clapton@gmail.com",
+  "fromUserID": 23,
   "toUserID": 20
 }
 
@@ -61,13 +61,13 @@ POST {{baseUrl}}controllers/sendMessage.php HTTP/1.1
 GET {{baseUrl}}controllers/inbox.php
 
 {
-  "userEmail": "kim_subin@gmail.com"
+  "userID": 20
 }
 
 ### Get a specific conversation
 GET {{baseUrl}}controllers/conversation.php
 
 {
-  "thisUserEmail": "john_clapton@gmail.com",
-  "otherUserID": 20
+  "userID": 20,
+  "otherUserID": 25
 }
