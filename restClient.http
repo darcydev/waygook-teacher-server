@@ -59,16 +59,16 @@ POST {{baseUrl}}controllers/uploadImage.php HTTP/1.1
 POST {{baseUrl}}controllers/sendMessage.php HTTP/1.1
 
 {
-  "text": "This is a RESTClient test!",
+  "text": "This is a RESTClient test 2!",
   "fromUserID": 23,
-  "toUserID": 20
+  "toUserID": "20"
 }
 
 ### Get all contacts (users with message history)
 POST {{baseUrl}}controllers/inbox.php
 
 {
-  "userID": 20
+  "userID": "20"
 }
 
 ### Get a specific conversation

@@ -13,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
   $otherUsers = [];
 
   while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-    if ($row['to_user_id'] === $userID) $otherUserID = $row['from_user_id'];
+    if ($row['to_user_id'] == $userID) $otherUserID = $row['from_user_id'];
     else $otherUserID = $row['to_user_id'];
 
     $otherUser = $profile->getProfile($otherUserID);
