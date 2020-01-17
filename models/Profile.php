@@ -30,9 +30,13 @@ class Profile
     return $stmt->fetch(PDO::FETCH_ASSOC);
   }
 
+  // TODO... exclude private columns (such as, email, password, and account_balance)
+  // from the select query
   public function getProfile($userID)
   {
-    $sql = "SELECT * FROM Users WHERE userID = ?";
+    $sql = "SELECT * 
+            FROM Users 
+            WHERE userID = ?";
     $stmt = $this->db->run($sql, [$userID]);
     return $stmt->fetch(PDO::FETCH_ASSOC);
   }

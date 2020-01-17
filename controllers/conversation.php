@@ -4,8 +4,8 @@ header("Content-Type: application/json");
 require("../index.php");
 $_POST = json_decode(file_get_contents('php://input'), true);
 
-if ($_SERVER['REQUEST_METHOD'] === "GET") {
-  $thisUserID = $_POST['userID'];
+if ($_SERVER['REQUEST_METHOD'] === "POST") {
+  $thisUserID = $_POST['thisUserID'];
   $otherUserID = $_POST['otherUserID'];
 
   $thisUser = $profile->getProfile($thisUserID);

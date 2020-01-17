@@ -65,16 +65,16 @@ POST {{baseUrl}}controllers/sendMessage.php HTTP/1.1
 }
 
 ### Get all contacts (users with message history)
-GET {{baseUrl}}controllers/inbox.php
+POST {{baseUrl}}controllers/inbox.php
 
 {
   "userID": 20
 }
 
 ### Get a specific conversation
-GET {{baseUrl}}controllers/conversation.php
+POST {{baseUrl}}controllers/conversation.php
 
 {
-  "userID": 20,
-  "otherUserID": 25
+  "thisUserID": "20",
+  "otherUserID": 31
 }

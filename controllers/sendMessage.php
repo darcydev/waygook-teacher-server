@@ -6,7 +6,6 @@ $_POST = json_decode(file_get_contents('php://input'), true);
 
 if ($_SERVER['REQUEST_METHOD'] === "POST") {
   $text = $_POST['text'];
-  // send this from cookies
   $fromUserID = $_POST['fromUserID'];
   $toUserID = $_POST['toUserID'];
 
