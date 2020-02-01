@@ -2,31 +2,34 @@
 header("Content-Type: multipart/form-data");
 
 require("../index.php");
-$_POST = json_decode(file_get_contents('php://input'), true);
+$_FILES = json_decode(file_get_contents('php://input'), true);
 
 if ($_SERVER['REQUEST_METHOD'] === "POST") {
-  // get this from the cookie
   $userID = $_POST['userID'];
 
-  $uid = $_POST['uid'];
+  $name = $_FILES['name'];
+
+  // random number between 0 and 100,000
+  $random = mt_rand(0, 100000);
+
   $name = $_POST['name'];
   $extension = $_POST['type'];
   $size = $_POST['size'];
 
-  $DB_NAME = $uid . $name;
-  $targetDir = 'C:\Users\Darcy\Projects\Waygook-Teacher\waygook-teacher-client\build\images\profiles\\';
+  $DB_NAME = "/" . $name . $random;
+  $targetDir = "C:/Users/Darcy/Projects/Waygook-Teacher/waygook-teacher-client/public/images/profile_pics";
   $uploadPath = $targetDir . $DB_NAME;
 
-  $rowsAffected = $user->uploadProfilePic($uploadPath, $userID);
+  $rowsAffected = $account->updateImage($userID, $uploadPath);
 
-  if ($rowsAffected === 1) {
+  if ($rowsAffected === true) {
     $successUpload = move_uploaded_file($DB_NAME, $uploadPath);
 
     if ($successUpload) {
       $success = true;
     } else {
       $success = false;
-      $message = 'Failed move_uploaded_file';
+      $message = 'Failed move_uploaded_file to:' . $uploadPath;
     }
   } else {
     $success = false;

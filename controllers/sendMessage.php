@@ -6,8 +6,8 @@ $_POST = json_decode(file_get_contents('php://input'), true);
 
 if ($_SERVER['REQUEST_METHOD'] === "POST") {
   $text = $_POST['text'];
-  $fromUserID = $_POST['fromUserID'];
-  $toUserID = $_POST['toUserID'];
+  $fromUserID = $_POST['fromUser'];
+  $toUserID = $_POST['toUser'];
 
   $result = $employment->createMessage($text, $fromUserID, $toUserID);
 

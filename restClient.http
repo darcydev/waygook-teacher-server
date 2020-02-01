@@ -48,7 +48,6 @@ POST {{baseUrl}}controllers/uploadImage.php HTTP/1.1
 
 {
   "userID": 20,
-  "uid": "123456789",
   "name": "fake_image.jpg",
   "extension": "image/jpeg",
   "type": "jpeg",
