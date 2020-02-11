@@ -1,5 +1,5 @@
-@baseUrl = http://waygookteacher.com/api/
-// @baseUrl = http://127.0.0.1:8080/
+//@baseUrl = http://waygookteacher.com/api/
+@baseUrl = http://127.0.0.1:8080/
 
 ### Login a registered User
 POST {{baseUrl}}controllers/login.php HTTP/1.1
